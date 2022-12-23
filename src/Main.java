@@ -54,8 +54,9 @@ public class Main {
         String name = scanner.nextLine();
         System.out.println("Enter phone number: ");
         String phone = scanner.nextLine();
-        Contact newContact = Contact.createContact(name, phone); // calls factory method generation of object using scanner input
-        if(mobilePhone.addNewContact(newContact)) {
+        Contact newContact = Contact.createContact(name, phone); // calls factory method generation of object using scanner
+        // input. Calls the factory method directly without an instance, since createContact is a static method
+        if(mobilePhone.addNewContact(newContact)) { //if addNewContact returns true, then contact added
             System.out.println("New contact added: name = " + name + ", phone = "+ phone);
         } else {
             System.out.println("Cannot add, " + name + " already on file");
@@ -65,7 +66,7 @@ public class Main {
     private static void updateContact() {
         System.out.println("Enter existing contact name: ");
         String name = scanner.nextLine();
-        Contact existingContactRecord = mobilePhone.queryContact(name);
+        Contact existingContactRecord = mobilePhone.queryContact(name); // contact returned at index of specified name
         if(existingContactRecord == null) {
             System.out.println("Contact not found.");
             return;
@@ -75,8 +76,9 @@ public class Main {
         String newName = scanner.nextLine();
         System.out.print("Enter new contact phone number: ");
         String newNumber = scanner.nextLine();
-        Contact newContact = Contact.createContact(newName, newNumber);
-        if(mobilePhone.updateContact(existingContactRecord, newContact)) {
+        Contact newContact = Contact.createContact(newName, newNumber); //static method again
+        if(mobilePhone.updateContact(existingContactRecord, newContact)) { // updateContact performs the modification
+            // but also returns a boolean which we use as a print condition
             System.out.println("Successfully updated record");
         } else {
             System.out.println("Error updating record.");
@@ -86,13 +88,14 @@ public class Main {
     private static void removeContact() {
         System.out.println("Enter existing contact name: ");
         String name = scanner.nextLine();
-        Contact existingContactRecord = mobilePhone.queryContact(name);
+        Contact existingContactRecord = mobilePhone.queryContact(name); //contact returned at index of specified name
         if (existingContactRecord == null) {
             System.out.println("Contact not found.");
             return;
         }
 
-        if(mobilePhone.removeContact(existingContactRecord)) {
+        if(mobilePhone.removeContact(existingContactRecord)) { // removeContact returns boolean for print condition
+                                                                // in addition to contact deletion
             System.out.println("Successfully deleted");
         } else {
             System.out.println("Error deleting contact");
@@ -120,7 +123,7 @@ public class Main {
         System.out.println("0  - to shutdown\n" +
                 "1  - to print contacts\n" +
                 "2  - to add a new contact\n" +
-                "3  - to update existing an existing contact\n" +
+                "3  - to update an existing contact\n" +
                 "4  - to remove an existing contact\n" +
                 "5  - query if an existing contact exists\n" +
                 "6  - to print a list of available actions.");
